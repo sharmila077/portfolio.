@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sharmila J — AI & Data Science</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0F1B;
+    --panel:#111A2B;
+    --panel-2:#0D1524;
+    --line:#212D42;
+    --text:#E8EDF4;
+    --muted:#8496B3;
+    --data:#43D9C7;
+    --data-dim:#1F5D57;
+    --creative:#F2A65A;
+    --creative-dim:#6B4A26;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Sora',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--data);color:var(--ink);}
+
+  .mono{font-family:'Space Mono',monospace;}
+
+  a{color:inherit;text-decoration:none;}
+
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,15,27,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:0.5px;
+  }
+  .logo span{color:var(--data);}
+  .navlinks{display:flex;gap:28px;font-size:13px;}
+  .navlinks a{
+    color:var(--muted);
+    font-family:'Space Mono',monospace;
+    transition:color .2s;
+    position:relative;
+  }
+  .navlinks a:hover, .navlinks a:focus-visible{color:var(--text);}
+  .navlinks a::after{
+    content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;
+    background:var(--data);transition:width .25s;
+  }
+  .navlinks a:hover::after{width:100%;}
+
+  /* HERO */
+  .hero{
+    padding:88px 0 64px;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    color:var(--data);
+    font-size:13px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:22px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{
+    content:'';width:8px;height:8px;border-radius:50%;
+    background:var(--data);
+    box-shadow:0 0 0 4px var(--data-dim);
+  }
+  h1{
+    font-size:clamp(42px,8vw,84px);
+    font-weight:800;
+    letter-spacing:-2px;
+    line-height:0.98;
+    margin-bottom:20px;
+  }
+  h1 .accent{color:var(--data);}
+  .role{
+    font-size:clamp(16px,2vw,20px);
+    color:var(--muted);
+    max-width:560px;
+    margin-bottom:34px;
+    font-weight:300;
+  }
+  .role strong{color:var(--text);font-weight:600;}
+
+  .terminal{
+    font-family:'Space Mono',monospace;
+    font-size:14px;
+    color:var(--data);
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:16px 20px;
+    max-width:560px;
+    display:flex;align-items:center;gap:2px;
+  }
+  .terminal .prompt{color:var(--creative);margin-right:8px;}
+  .caret{
+    display:inline-block;width:8px;height:16px;background:var(--data);
+    margin-left:4px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  .hero-contact{
+    display:flex;flex-wrap:wrap;gap:22px;margin-top:32px;
+    font-family:'Space Mono',monospace;font-size:13px;color:var(--muted);
+  }
+  .hero-contact a{display:flex;align-items:center;gap:7px;transition:color .2s;}
+  .hero-contact a:hover{color:var(--data);}
+  .dot{color:var(--line);}
+
+  /* SECTION HEADERS */
+  .section{padding:80px 0;border-top:1px solid var(--line);}
+  .section-head{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:44px;
+  }
+  .section-num{
+    font-family:'Space Mono',monospace;color:var(--creative);font-size:14px;
+  }
+  .section-title{
+    font-size:clamp(26px,4vw,36px);font-weight:700;letter-spacing:-0.5px;
+  }
+  .section-sub{
+    color:var(--muted);font-size:15px;margin-top:-30px;margin-bottom:44px;max-width:520px;
+  }
+
+  /* RAIL / SKILLS SIGNATURE */
+  .rail-wrap{position:relative;padding:20px 0 8px;}
+  .rail-labels{display:flex;justify-content:space-between;margin-bottom:6px;}
+  .rail-label{
+    font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1.5px;
+    text-transform:uppercase;
+  }
+  .rail-label.data{color:var(--data);}
+  .rail-label.creative{color:var(--creative);}
+
+  .track{position:relative;height:110px;margin-bottom:6px;}
+  .track-line{
+    position:absolute;left:0;right:0;top:50%;height:2px;
+    transform:translateY(-50%);
+  }
+  .track.data-track .track-line{background:linear-gradient(90deg, var(--data-dim), var(--data));}
+  .track.creative-track .track-line{background:linear-gradient(90deg, var(--creative-dim), var(--creative));}
+
+  .node{
+    position:absolute;top:50%;transform:translate(-50%,-50%);
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .node .pt{
+    width:12px;height:12px;border-radius:50%;
+    background:var(--ink);border:2px solid var(--data);
+  }
+  .creative-track .node .pt{border-color:var(--creative);}
+  .node .lbl{
+    font-family:'Space Mono',monospace;font-size:12px;color:var(--text);
+    white-space:nowrap;
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:4px 9px;border-radius:5px;
+  }
+  .data-track .node .lbl-top{margin-bottom:0;order:-1;}
+  .data-track .node{flex-direction:column-reverse;}
+
+  .working-style{
+    margin-top:38px;display:flex;gap:14px;flex-wrap:wrap;
+  }
+  .pill{
+    font-family:'Space Mono',monospace;font-size:12.5px;
+    border:1px solid var(--line);color:var(--muted);
+    padding:8px 14px;border-radius:20px;
+  }
+  .pill span{color:var(--text);}
+
+  /* EDUCATION TIMELINE */
+  .timeline{position:relative;padding-left:28px;}
+  .timeline::before{
+    content:'';position:absolute;left:5px;top:6px;bottom:6px;width:1px;
+    background:var(--line);
+  }
+  .tl-item{position:relative;padding-bottom:38px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:'';position:absolute;left:-28px;top:4px;width:11px;height:11px;
+    border-radius:50%;background:var(--ink);border:2px solid var(--data);
+  }
+  .tl-item.current::before{background:var(--data);}
+  .tl-year{
+    font-family:'Space Mono',monospace;font-size:12.5px;color:var(--creative);
+    margin-bottom:6px;
+  }
+  .tl-title{font-size:18px;font-weight:600;margin-bottom:4px;}
+  .tl-meta{color:var(--muted);font-size:14px;}
+  .tl-meta strong{color:var(--data);font-weight:600;}
+
+  /* CERTS */
+  .cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media(max-width:640px){.cert-grid{grid-template-columns:1fr;}}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:26px;transition:border-color .25s, transform .25s;
+  }
+  .card:hover{border-color:var(--data);transform:translateY(-3px);}
+  .card-tag{
+    font-family:'Space Mono',monospace;font-size:11px;color:var(--creative);
+    letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;display:block;
+  }
+  .card-title{font-size:16.5px;font-weight:600;margin-bottom:8px;}
+  .card-meta{color:var(--muted);font-size:13.5px;}
+
+  /* CONTACT / FOOTER */
+  .contact-box{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:48px;text-align:center;
+  }
+  .contact-box h2{font-size:clamp(24px,4vw,34px);margin-bottom:14px;letter-spacing:-0.5px;}
+  .contact-box p{color:var(--muted);margin-bottom:30px;}
+  .contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .btn{
+    font-family:'Space Mono',monospace;font-size:13.5px;
+    padding:12px 22px;border-radius:8px;border:1px solid var(--line);
+    display:flex;align-items:center;gap:8px;transition:all .2s;
+  }
+  .btn.primary{background:var(--data);color:var(--ink);border-color:var(--data);font-weight:700;}
+  .btn.primary:hover{background:var(--text);}
+  .btn:not(.primary):hover{border-color:var(--data);color:var(--data);}
+
+  footer{
+    padding:32px 0;text-align:center;color:var(--muted);
+    font-family:'Space Mono',monospace;font-size:12px;
+    border-top:1px solid var(--line);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .caret{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  @media (max-width:640px){
+    .navlinks{display:none;}
+    .track{height:150px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">SHARMILA<span>_J</span></div>
+      <div class="navlinks">
+        <a href="#skills">skills</a>
+        <a href="#education">education</a>
+        <a href="#certs">certifications</a>
+        <a href="#contact">contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Open to internships</div>
+    <h1>Sharmila J<span class="accent">.</span></h1>
+    <p class="role">B.Tech <strong>Artificial Intelligence &amp; Data Science</strong> student who moves comfortably between structured data work and creative editing — Python and spreadsheets on one side, the cutting room on the other.</p>
+    <div class="terminal mono">
+      <span class="prompt">&gt;</span> skillset --list<br>
+    </div>
+    <div class="hero-contact">
+      <a href="tel:7708930867">📱 77089 30867</a>
+      <span class="dot">·</span>
+      <a href="mailto:sharmila112005@gmail.com">📧 sharmila112005@gmail.com</a>
+      <span class="dot">·</span>
+      <a href="https://github.com/sharmila077" target="_blank" rel="noopener">GitHub ↗</a>
+      <span class="dot">·</span>
+      <a href="https://www.linkedin.com/in/sharmila-j-0639b5332" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <span class="section-title">Two tracks, one profile</span>
+    </div>
+    <p class="section-sub">Technical grounding in data and code, paired with hands-on creative production — shown here as two parallel rails.</p>
+
+    <div class="rail-wrap">
+      <div class="rail-labels">
+        <span class="rail-label data">Data &amp; Dev</span>
+      </div>
+      <div class="track data-track">
+        <div class="track-line"></div>
+        <div class="node" style="left:8%"><span class="lbl">Python</span><span class="pt"></span></div>
+        <div class="node" style="left:32%"><span class="lbl">SQL</span><span class="pt"></span></div>
+        <div class="node" style="left:56%"><span class="lbl">Java</span><span class="pt"></span></div>
+        <div class="node" style="left:80%"><span class="lbl">VS Code</span><span class="pt"></span></div>
+      </div>
+
+      <div class="rail-labels">
+        <span class="rail-label creative">Tools &amp; Creative</span>
+      </div>
+      <div class="track creative-track">
+        <div class="track-line"></div>
+        <div class="node" style="left:8%"><span class="pt"></span><span class="lbl">Video Editing</span></div>
+        <div class="node" style="left:32%"><span class="pt"></span><span class="lbl">Excel</span></div>
+        <div class="node" style="left:56%"><span class="pt"></span><span class="lbl">Word</span></div>
+        <div class="node" style="left:80%"><span class="pt"></span><span class="lbl">PowerPoint</span></div>
+      </div>
+    </div>
+
+    <div class="working-style">
+      <div class="pill">Working style — <span>Team Work</span></div>
+      <div class="pill">Working style — <span>Communication</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="education">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <span class="section-title">Education</span>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item current">
+        <div class="tl-year">2023 — 2027</div>
+        <div class="tl-title">Anna University</div>
+        <div class="tl-meta">B.Tech, Artificial Intelligence &amp; Data Science &nbsp;·&nbsp; <strong>7.5 CGPA</strong></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2022</div>
+        <div class="tl-title">Sunnambukulam Higher Secondary School</div>
+        <div class="tl-meta">HSC &nbsp;·&nbsp; <strong>70%</strong></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2020</div>
+        <div class="tl-title">Sakunthalammal Matriculation School, Thurapallarm</div>
+        <div class="tl-meta">SSLC &nbsp;·&nbsp; <strong>76%</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="certs">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <span class="section-title">Certifications &amp; Internships</span>
+    </div>
+
+    <div class="cert-grid">
+      <div class="card">
+        <span class="card-tag">Certification · 2024</span>
+        <div class="card-title">Data Analytics Certification</div>
+        <div class="card-meta">30-day masterclass programme completed with Novitech R&amp;D Pvt. Ltd.</div>
+      </div>
+      <div class="card">
+        <span class="card-tag">Internship · 1 month</span>
+        <div class="card-title">Web Analysis Internship</div>
+        <div class="card-meta">Completed a one-month internship project focused on web analysis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2>Let's build something.</h2>
+      <p>Open to internships and entry-level roles in data analysis, Python development, or creative/technical hybrid work.</p>
+      <div class="contact-links">
+        <a class="btn primary" href="mailto:sharmila112005@gmail.com">Email me</a>
+        <a class="btn" href="tel:7708930867">Call</a>
+        <a class="btn" href="https://github.com/sharmila077" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/sharmila-j-0639b5332" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Sharmila J · Built with intent, not a template.
+</footer>
+
+</body>
+</html>
